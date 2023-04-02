@@ -18,20 +18,11 @@ const markup = galleryItems.map(({ preview, original, description }) => {
 });
 
 galleryImg.insertAdjacentHTML('beforeend', markup.join(''));
-galleryImg.addEventListener('click', onClick);
 
-function onClick(event) {
-    event.preventDefault();
-    if (!event.target.classList.contains('gallery__image')) {
-        return;
-    }
 
-    const modalImg = new SimpleLightbox('.gallery a', {
-        captionSelector: 'img',
-        alertErrorMessage: 'Image not found, next image will be loaded',
-        captionsData: 'alt',
-        captionPosition: 'bottom',
-        animationSpeed: 250,
-        captionDelay: 0,
-    })
-}
+const modalImg = new SimpleLightbox('.gallery a', {
+    captionSelector: 'img',
+    alertErrorMessage: 'Image not found, next image will be loaded',
+    captionsData: 'alt',
+    captionDelay: 250,
+});

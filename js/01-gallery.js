@@ -35,17 +35,34 @@ function onClick(event) {
         class="modal__image"
         src="${originalImg}"
         alt="${descriptionImg}"
-        />`,
-    );
+        />`, {
+            onShow: ((modalImg) => {
+                event.currentTarget.addEventListener('keydown', onKeydownModal);
+
+                function onKeydownModal(event) {
+                    if (event.key === 'Escape') {
+                        modalImg.close();
+                    }
+                    false;
+                }
+            }),
+
+            onClose: ((modalImg) => {
+                event.currentTarget.removeEventListener('keydown', onKeydownModal);
+
+                function onKeydownModal(event) {
+                    if (event.key === 'Escape') {
+                        modalImg.close();
+                    }
+                    false;
+                }
+
+            }),
+
+        }
+    )
 
     modalImg.show();
+    modalImg.close();
 
-    event.currentTarget.addEventListener('keydown', onKeydownModal);
-
-    function onKeydownModal(event) {
-        if (event.key === 'Escape') {
-            modalImg.close();
-        }
-        false;
-    }
 }
