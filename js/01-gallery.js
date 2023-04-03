@@ -29,40 +29,24 @@ function onClick(event) {
 
     const originalImg = event.target.dataset.source;
     const descriptionImg = event.target.alt;
-    const modalImg = basicLightbox.create(
+    const modal = basicLightbox.create(
         `
         <img
         class="modal__image"
         src="${originalImg}"
         alt="${descriptionImg}"
         />`, {
-            onShow: ((modalImg) => {
-                event.currentTarget.addEventListener('keydown', onKeydownModal);
-
-                function onKeydownModal(event) {
-                    if (event.key === 'Escape') {
-                        modalImg.close();
-                    }
-                    false;
-                }
-            }),
-
-            onClose: ((modalImg) => {
-                event.currentTarget.removeEventListener('keydown', onKeydownModal);
-
-                function onKeydownModal(event) {
-                    if (event.key === 'Escape') {
-                        modalImg.close();
-                    }
-                    false;
-                }
-
-            }),
-
+            onShow: () => window.addEventListener('keydown', onKeydownModal),
+            onClose: () => window.removeEventListener('keydown', onKeydownModal),
         }
-    )
+    );
 
-    modalImg.show();
-    modalImg.close();
+    modal.show();
+
+    function onKeydownModal(event) {
+        if (event.keyCode === 27) {
+            modal.close();
+        }
+    }
 
 }
